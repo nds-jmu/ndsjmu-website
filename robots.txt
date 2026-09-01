@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /images/officers/
+Disallow: /images/speakers/
+
+Sitemap: https://ndsjmu.org/sitemap.xml

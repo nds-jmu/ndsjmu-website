@@ -1,0 +1,636 @@
+/* =====================================================
+   NDS-JMU WEBSITE STYLES
+   =====================================================
+   HOW THIS FILE IS ORGANIZED (in order):
+     1. Variables      — all colors, fonts, spacing
+     2. Base           — resets and defaults
+     3. Reusable bits  — section labels, buttons, photos
+     4. Hero / header
+     5. Sticky nav
+     6. About
+     7. What We Do
+     8. Speakers
+     9. Meetings
+    10. Project Teams
+    11. Leadership
+    12. Join / Get Involved
+    13. Footer
+    14. Mobile (responsive) rules
+   To change a color or font everywhere, edit section 1.
+   ===================================================== */
+
+/* =====================================================
+   1. VARIABLES — change these to restyle the whole site
+   ===================================================== */
+:root {
+  /* Colors (match the posters) */
+  --navy:       #1E3244;  /* deep navy — header, footer, dark bars */
+  --accent:     #527A9C;  /* muted steel blue — buttons, labels, accents */
+  --light:      #F1F1F1;  /* off-white — page background */
+  --white:      #FFFFFF;  /* card backgrounds */
+  --ink:        #1B1B1B;  /* charcoal body text on light backgrounds */
+  --slate:      #6B7B8C;  /* secondary text, captions */
+  --steel:      #527A9C;  /* mid blue — photo tint */
+  --sky:        #9FC4E3;  /* light powder blue — small labels on navy */
+  --line:       #DEE3E8;  /* thin borders on light backgrounds */
+
+  /* Fonts */
+  --font-body:    "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Oswald", "Arial Narrow", sans-serif;      /* big condensed headers */
+  --font-mono:    "JetBrains Mono", "Courier New", monospace; /* "// LABELS" */
+
+  /* Spacing — used for section padding */
+  --space-section: clamp(72px, 10vw, 128px); /* gap above/below each section */
+  --content-width: 1120px;                   /* max width of content */
+}
+
+/* =====================================================
+   2. BASE
+   ===================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;        /* smooth scrolling to anchors, no JS needed */
+  scroll-padding-top: 84px;       /* stops anchors hiding behind the sticky nav */
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--light);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: var(--steel); }
+a:hover { color: var(--navy); }
+
+/* Every content block sits in a centered column */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section { padding: var(--space-section) 0; }
+
+/* =====================================================
+   3. REUSABLE BITS
+   ===================================================== */
+
+/* Gold monospace label, e.g. "// ABOUT" */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* Big condensed section headline, e.g. "WHO WE ARE" */
+.section-headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--navy);
+  margin-bottom: 28px;
+  text-wrap: balance;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 14px 32px;
+  border: 2px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-primary {                    /* primary button */
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+}
+.btn-primary:hover { background: #648BAC; border-color: #648BAC; color: var(--white); }
+.btn-outline-light {              /* secondary on navy backgrounds */
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.btn-outline-light:hover { border-color: var(--white); color: var(--white); }
+.btn-outline-dark {               /* secondary on light backgrounds */
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn-outline-dark:hover { background: var(--navy); color: var(--white); }
+
+/* Blue-tinted photo treatment (matches the posters).
+   Wrap any <img> in <figure class="tinted-photo"> to get the effect. */
+.tinted-photo {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+}
+.tinted-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05); /* photo becomes black & white... */
+}
+.tinted-photo::after {                    /* ...then this blue layer tints it */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--steel);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Gold corner brackets (decorative, like the posters).
+   Add class "corner-brackets" to a positioned element. */
+.corner-brackets::before,
+.corner-brackets::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+}
+.corner-brackets::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.corner-brackets::after  { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* =====================================================
+   4. HERO / HEADER (navy block at the top)
+   ===================================================== */
+.hero {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0 0 clamp(72px, 9vw, 120px);
+}
+
+/* Thin bar at the very top with two monospace labels */
+.hero-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: clamp(56px, 8vw, 104px);
+}
+.hero-topbar span {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--sky);
+}
+
+.hero-inner { position: relative; padding: 8px 0 8px 40px; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7.5vw, 96px);
+  font-weight: 700;
+  line-height: 1.02;
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+
+/* Gold italic tagline — "From Classroom to Clearance" */
+.hero-tagline {
+  color: var(--sky);
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 28px);
+  margin: 24px 0 16px;
+}
+
+.hero-mission {
+  font-size: clamp(17px, 1.8vw, 19px);
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 54ch;
+  margin-bottom: 40px;
+}
+
+.hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* =====================================================
+   5. STICKY NAV (sits below the hero, sticks on scroll)
+   ===================================================== */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 247, 250, 0.88);  /* semi-transparent... */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);            /* ...with subtle blur */
+  border-bottom: 1px solid var(--line);
+}
+.site-nav.is-stuck { box-shadow: 0 2px 16px rgba(10, 22, 40, 0.08); } /* added by script.js */
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 76px;
+}
+
+.nav-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-wordmark img { height: 64px; width: auto; }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links a:hover { color: var(--steel); }
+
+.nav-join {
+  font-size: 14px;
+  padding: 9px 22px;
+  white-space: nowrap;
+}
+
+/* Hamburger button — hidden on desktop, and hidden entirely
+   when JavaScript is off (the links just wrap instead) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 8px 14px;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+/* =====================================================
+   6. ABOUT
+   ===================================================== */
+.about-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 60em;
+}
+.about-columns p { color: var(--ink); }
+
+.about-footnote {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--slate);
+  margin-top: 40px;
+}
+
+/* =====================================================
+   7. WHAT WE DO (three pillar cards)
+   ===================================================== */
+.what-we-do { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pillar-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 36px 32px;
+}
+.pillar-number {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 20px;
+}
+.pillar-card h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.pillar-card p { color: var(--slate); font-size: 16px; }
+
+/* =====================================================
+   8. SPEAKERS (2x2 grid of cards)
+   ===================================================== */
+.speaker-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.speaker-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.speaker-card .tinted-photo { min-height: 240px; }
+.speaker-card img { position: absolute; inset: 0; }
+
+.speaker-info { padding: 28px; display: flex; flex-direction: column; justify-content: center; }
+
+.speaker-date {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.speaker-info h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.speaker-title { font-weight: 500; font-size: 15.5px; color: var(--ink); margin-bottom: 8px; }
+.speaker-note  { font-size: 14.5px; color: var(--slate); }
+
+/* =====================================================
+   9. MEETINGS
+   ===================================================== */
+.meetings { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+/* Navy bar showing day / time / location (like the poster's date bar) */
+.meeting-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--navy);
+  color: var(--white);
+  margin: 8px 0 20px;
+}
+.meeting-bar > div { padding: 24px 32px; }
+.meeting-bar > div + div { border-left: 1px solid rgba(255, 255, 255, 0.14); }
+.meeting-bar dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--sky);
+  margin-bottom: 6px;
+}
+.meeting-bar dd {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.meeting-note { color: var(--slate); max-width: 60ch; margin-bottom: 48px; }
+
+/* Semester key-dates list */
+.dates-heading {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.dates-table { width: 100%; border-collapse: collapse; }
+.dates-table td {
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.dates-table td:first-child {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  white-space: nowrap;
+  width: 200px;
+  font-weight: 500;
+}
+.dates-table .date-tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-left: 10px;
+}
+
+/* =====================================================
+   10. PROJECT TEAMS
+   ===================================================== */
+.projects-intro { max-width: 62ch; color: var(--ink); margin-bottom: 40px; }
+
+.domain-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style: none;
+  margin-bottom: 44px;
+}
+.domain-list li {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  padding: 12px 24px;
+  background: var(--white);
+}
+
+/* =====================================================
+   11. LEADERSHIP
+   ===================================================== */
+.leadership { background: var(--white); border-top: 1px solid var(--line); }
+
+.officer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.officer-card { border: 1px solid var(--line); background: var(--white); }
+.officer-card .tinted-photo { aspect-ratio: 5 / 6; }
+.officer-body { padding: 20px 22px 24px; }
+.officer-body h3 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.officer-role {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin: 4px 0 10px;
+}
+.officer-bio { font-size: 14px; color: var(--slate); }
+
+/* Faculty advisor line below the officer grid */
+.advisor {
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.advisor-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+.advisor strong { font-size: 18px; color: var(--navy); }
+.advisor span:last-child { color: var(--slate); }
+
+/* =====================================================
+   12. JOIN / GET INVOLVED (navy call-to-action card)
+   ===================================================== */
+.join-card {
+  position: relative;
+  background: var(--navy);
+  color: var(--white);
+  padding: clamp(48px, 7vw, 88px) clamp(32px, 6vw, 80px);
+}
+.join-card .section-headline { color: var(--white); }
+.join-card .section-label { color: var(--sky); } /* powder blue reads better on navy */
+.join-card p { color: rgba(255, 255, 255, 0.82); max-width: 52ch; margin-bottom: 36px; }
+.join-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 36px; }
+
+.join-contact {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.join-contact a { color: var(--sky); text-decoration: none; }
+.join-contact a:hover { color: var(--white); text-decoration: underline; }
+
+/* =====================================================
+   13. FOOTER
+   ===================================================== */
+.site-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 56px 0 40px;
+  font-size: 14px;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.footer-identity strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+.footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+.footer-links a:hover { color: var(--white); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 24px;
+}
+.footer-bottom .mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--sky);
+}
+
+/* =====================================================
+   14. MOBILE / RESPONSIVE
+   Rules below only apply on smaller screens.
+   ===================================================== */
+
+/* Tablets and below */
+@media (max-width: 900px) {
+  .pillar-grid   { grid-template-columns: 1fr; }
+  .speaker-grid  { grid-template-columns: 1fr; }
+  .officer-grid  { grid-template-columns: 1fr 1fr; }
+  .about-columns { grid-template-columns: 1fr; gap: 20px; }
+
+  /* Mobile nav: hide the link row behind a menu button (JS adds .js to <html>;
+     without JS the links simply stay visible and wrap) */
+  .js .nav-toggle { display: block; }
+  .js .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--light);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 24px 16px;
+  }
+  .js .nav-links.is-open { display: flex; }
+  .js .nav-links a { display: block; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav-inner { flex-wrap: wrap; position: relative; }
+  .nav-links:not(.is-open) { flex-wrap: wrap; gap: 12px 20px; } /* no-JS fallback */
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .speaker-card { grid-template-columns: 1fr; }
+  .speaker-card .tinted-photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .speaker-card img { position: static; }
+  .officer-grid { grid-template-columns: 1fr; }
+  .meeting-bar { grid-template-columns: 1fr; }
+  .meeting-bar > div + div { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.14); }
+  .hero-inner { padding-left: 24px; }
+  .dates-table td:first-child { width: auto; }
+}
