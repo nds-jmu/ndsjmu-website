@@ -14,6 +14,7 @@ it with any text editor (VS Code is free and recommended).
   - [Update meeting info and dates](#update-meeting-info-and-dates)
   - [Add a project team domain](#add-a-project-team-domain)
   - [Update officer information](#update-officer-information)
+  - [Add or remove a sponsor](#add-or-remove-a-sponsor)
   - [Update the Google Form link](#update-the-google-form-link)
   - [Speaker and officer photos](#speaker-and-officer-photos)
   - [Change colors, fonts, or spacing](#change-colors-fonts-or-spacing)
@@ -22,6 +23,7 @@ it with any text editor (VS Code is free and recommended).
 - [Security](#security)
 - [Custom domain setup](#custom-domain-setup)
 - [Rules of thumb](#rules-of-thumb)
+- [Officer handoff checklist](#officer-handoff-checklist)
 
 ---
 
@@ -38,6 +40,7 @@ it with any text editor (VS Code is free and recommended).
 | `.gitignore` | Tells Git which files to ignore. |
 | `images/speakers/` | Speaker headshots. |
 | `images/officers/` | Officer headshots. |
+| `images/sponsors/` | Sponsor logos. |
 | `images/logo.png` | The eagle shield logo. |
 | `images/og-image.png` | The preview image shown when the site is shared on LinkedIn (1200×630 px). |
 | `favicon.png` | Small icon shown in browser tabs. |
@@ -86,6 +89,32 @@ Find `8. LEADERSHIP SECTION` in `index.html`. Each officer is one
 delete one to remove. The faculty advisor is in the `advisor` block at
 the bottom of the section.
 
+### Add or remove a sponsor
+
+1. Get the sponsor's logo file. Ideally an SVG or transparent-background
+   PNG. Landscape orientation works best.
+2. Drop the logo into `images/sponsors/`. Name it `sponsor-name.svg` or
+   `sponsor-name.png` (lowercase, hyphens between words).
+3. Open `index.html` and find `9. SPONSORS SECTION`.
+4. Copy one whole `<a class="sponsor-card">...</a>` block.
+5. Paste it right before the comment `ADD A NEW SPONSOR CARD HERE`.
+6. In your new block, change:
+   - the `href` (the sponsor's website URL)
+   - the `img src` (the logo filename)
+   - the `alt` text (the sponsor's name)
+
+To remove a sponsor, delete their whole `<a>` block.
+
+**Logo requirements:**
+- Format: SVG (preferred) or PNG with transparent background
+- Landscape orientation (roughly 3:2 aspect ratio)
+- File size under 100KB
+- Ideally the logo has room to breathe — don't submit a logo that fills every corner
+
+**Sponsor privacy:** Only add a sponsor to the site after you have their
+explicit written permission to display their logo and link. Sponsor
+agreements should include this permission.
+
 ### Update the Google Form link
 
 The join/mailing-list form link appears **four times** in `index.html`.
@@ -123,12 +152,11 @@ You will do this once. After that, all changes deploy automatically.
 
 1. Go to **github.com** and create an account **using a chapter email
    address**, not a personal email. Future officers need to inherit this.
-   Suggested email: `nds.jmu@[chapter domain]` or similar.
 2. Create a new organization at github.com/organizations/new (also
    under the chapter email). Name it something like `nds-jmu`.
 3. Create a new repository under that organization named `ndsjmu-website`
-   (or whatever your domain will be). Choose **public** so GitHub Pages
-   and Vercel work on the free tier.
+   (or whatever your domain will be). Choose **public** so Vercel's
+   free tier works.
 4. Do NOT initialize with a README or .gitignore — this folder already
    has them.
 
@@ -153,7 +181,6 @@ repository names.
 
 1. Go to **vercel.com** and sign up **using the chapter email**.
 2. Click "Add New Project" and import the repository you just created.
-   You will need to grant Vercel access to your GitHub organization.
 3. Framework Preset: **Other**
 4. Build Command: leave empty
 5. Output Directory: leave empty
@@ -237,17 +264,11 @@ Aim for an A grade or higher on both.
 
 ### If you need to update the Content Security Policy
 
-If you add new external resources (analytics, embedded videos, etc.),
-you will need to update the `Content-Security-Policy` in `vercel.json`.
-The syntax is strict — a broken CSP can prevent the site from loading.
-Test in a preview deployment before merging to production.
-
-### Handling security reports
-
-If someone reports a security issue with the site, take it seriously.
-Respond within 24 hours acknowledging the report. Consider adding a
-`security.txt` file at `/.well-known/security.txt` with your security
-contact info in the future.
+If you add new external resources (analytics, embedded videos, sponsor
+logos hosted elsewhere), you may need to update the
+`Content-Security-Policy` in `vercel.json`. The syntax is strict — a
+broken CSP can prevent the site from loading. Test in a preview
+deployment before merging to production.
 
 ---
 
@@ -279,7 +300,7 @@ domain (e.g., `ndsjmu.org`):
 - After editing, open `index.html` in your browser (double-click the
   file) to check it looks right before committing.
 - Don't rename the CSS class names (`speaker-card`, `officer-card`,
-  etc.) — the styling depends on them.
+  `sponsor-card`, etc.) — the styling depends on them.
 - Don't modify `vercel.json` without understanding what each setting
   does. A broken CSP can silently break the site.
 - Keep the site simple. If you feel the urge to add a JavaScript
