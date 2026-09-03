@@ -591,9 +591,10 @@ section { padding: var(--space-section) 0; }
 /* Grid of sponsor logo cards. Each card is a link. */
 .sponsor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
   gap: 20px;
   margin-bottom: 40px;
+  justify-content: start;
 }
 
 .sponsor-card {
@@ -601,7 +602,7 @@ section { padding: var(--space-section) 0; }
   align-items: center;
   justify-content: center;
   aspect-ratio: 3 / 2;
-  padding: 24px;
+  padding: 16px;
   background: var(--light);
   border: 1px solid var(--line);
   transition: border-color 0.2s, transform 0.2s;
