@@ -697,6 +697,65 @@ section { padding: var(--space-section) 0; }
 }
 
 /* =====================================================
+   LEGAL PAGES (privacy, terms, etc.)
+   Add this to style.css near the bottom, before the
+   MOBILE / RESPONSIVE section.
+   ===================================================== */
+   .legal-page {
+    background: var(--light);
+    padding: clamp(80px, 10vw, 140px) 0 clamp(60px, 8vw, 100px);
+    min-height: 70vh;
+  }
+
+  .legal-page .container {
+    max-width: 780px;
+  }
+
+  .legal-page h1 {
+    margin-bottom: 8px;
+  }
+
+  .legal-page h2 {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 36px 0 12px;
+  }
+
+  .legal-page p {
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 14px;
+    max-width: 68ch;
+  }
+
+  .legal-page a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .legal-page a:hover {
+    color: var(--navy);
+  }
+
+  .legal-updated {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--slate);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+
+  .legal-return {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+/* =====================================================
    15. MOBILE / RESPONSIVE
    Rules below only apply on smaller screens.
    ===================================================== */
