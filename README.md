@@ -14,6 +14,7 @@ it with any text editor (VS Code is free and recommended).
   - [Update meeting info and dates](#update-meeting-info-and-dates)
   - [Add a project team domain](#add-a-project-team-domain)
   - [Update officer information](#update-officer-information)
+  - [Add a company to Where Our Members Go](#add-a-company-to-where-our-members-go)
   - [Add or remove a sponsor](#add-or-remove-a-sponsor)
   - [Update the Google Form link](#update-the-google-form-link)
   - [Speaker and officer photos](#speaker-and-officer-photos)
@@ -41,6 +42,7 @@ it with any text editor (VS Code is free and recommended).
 | `images/speakers/` | Speaker headshots. |
 | `images/officers/` | Officer headshots. |
 | `images/sponsors/` | Sponsor logos. |
+| `images/destinations/` | Company logos for the Where Our Members Go banner. |
 | `images/logo.png` | The eagle shield logo. |
 | `images/og-image.png` | The preview image shown when the site is shared on LinkedIn (1200×630 px). |
 | `favicon.png` | Small icon shown in browser tabs. |
@@ -88,6 +90,22 @@ Find `8. LEADERSHIP SECTION` in `index.html`. Each officer is one
 `<article class="officer-card">` block — copy one to add an officer,
 delete one to remove. The faculty advisor is in the `advisor` block at
 the bottom of the section.
+
+### Add a company to Where Our Members Go
+
+1. Get the company's logo, ideally an SVG or a PNG with a transparent
+   background. It sits on a white tile, so any color logo works.
+2. Drop it into `images/destinations/` (lowercase, hyphens: `company-name.svg`).
+3. Open `index.html` and find `7A. WHERE OUR MEMBERS GO SECTION`.
+4. Copy one `<li>...</li>` line, paste it before `ADD A NEW COMPANY LOGO HERE`,
+   and update the `src` and the `alt` text (the company's name).
+5. Delete the placeholder lines once you have real logos.
+
+With 8 logos or fewer the banner is one scrolling row; with 9 or more it
+splits into two rows moving in opposite directions. To change that
+cutoff, edit `data-row-threshold="8"` on the `logo-marquee` line.
+
+Only list organizations where a member has actually interned or worked.
 
 ### Add or remove a sponsor
 
