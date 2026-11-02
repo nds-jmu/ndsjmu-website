@@ -101,9 +101,9 @@ the bottom of the section.
    and update the `src` and the `alt` text (the company's name).
 5. Delete the placeholder lines once you have real logos.
 
-With 8 logos or fewer the banner is one scrolling row; with 9 or more it
+With 11 logos or fewer the banner is one scrolling row; with 12 or more it
 splits into two rows moving in opposite directions. To change that
-cutoff, edit `data-row-threshold="8"` on the `logo-marquee` line.
+cutoff, edit `data-row-threshold="11"` on the `logo-marquee` line.
 
 Only list organizations where a member has actually interned or worked.
 
