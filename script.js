@@ -1,11 +1,10 @@
 /* =====================================================
    NDS-JMU — script.js
    =====================================================
-   This file does only four small things:
+   This file does only three small things:
      1. Marks the page as "JavaScript is on" (for CSS)
      2. Mobile menu open/close
      3. Adds a shadow to the nav once it sticks
-     4. Turns the "Where Our Members Go" logos into a scrolling banner
    The whole site still works if JavaScript is disabled —
    smooth scrolling is handled by CSS, not by this file.
    ===================================================== */
